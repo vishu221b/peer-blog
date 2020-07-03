@@ -9,20 +9,24 @@ class User(object):
         self.email = email
         print(email, "  ", type(self.email))
         self.password = password
-        self._id = uuid.uuid4().hex
+        self._id = uuid.uuid4().hex if not _id else _id
 
     @classmethod
     def get_by_email(cls, email):
         user = Database.find_one(collection=constants.USER_COLLECTION,
                                  query={"email": email})
         if user:
+            print(user)
             return cls(**user)
+        return None
 
     @classmethod
     def get_by_id(cls, _id):
         user = Database.find_one(collection=constants.USER_COLLECTION,
                                  query={"_id": _id})
-        return cls(**user)
+        if user:
+            return cls(**user)
+        return None
 
     def is_login_valid(self):
         """
@@ -37,7 +41,7 @@ class User(object):
     @classmethod
     def register(cls, email, password):
         user = cls.get_by_email(email)
-        if user:
+        if not user:
             new_user = cls(email, password)
             new_user.save_to_mongo()
             session.__setitem__('email', email)
