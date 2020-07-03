@@ -1,3 +1,8 @@
-#login-form {
+.post-forms {
     margin-top: 25px;
+}
+
+.post-forms{
+    max-width:40%;
+    float: center;
 }
