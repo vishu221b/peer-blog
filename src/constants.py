@@ -1,5 +1,5 @@
 MONGO_URI = "mongodb://localhost:27017"
-DATABASE = "cli_blogging"
+DATABASE = "peer-blog"
 POST_COLLECTION = "posts"
 BLOG_COLLECTION = "blogs"
 USER_COLLECTION = "users"
