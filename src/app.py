@@ -46,7 +46,10 @@ def my_profile():
             p = new_password if len(new_password) > 0 else None
             current_user = User.get_by_email(session.get('email'))
             current_user.update_user(None, p)
-            prompt_success = "Password updated successfully."
+            if len(new_password):
+                prompt_success = "Password updated successfully."
+            else:
+                prompt_message = "Nothing to update."
     return render_template('profile.html', prompt_message=prompt_message, prompt_success=prompt_success)
 
 
@@ -106,7 +109,6 @@ def search():
                            }
                            )
     li = [r for r in result]
-    print(li)
     return render_template('search.html', posts=li, author=pattern)
 
 # ----------------------------Blogs-----------------------------------
