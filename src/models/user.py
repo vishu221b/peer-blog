@@ -40,6 +40,8 @@ class User(object):
 
     @classmethod
     def register(cls, email, password):
+        if not len(email) or not len(password):
+            return False
         user = cls.get_by_email(email)
         if not user:
             new_user = cls(email, password)
@@ -84,4 +86,16 @@ class User(object):
         Database.insert(
             constants.USER_COLLECTION,
             self.json()
+        )
+
+    def update_user(self, new_email, new_password=None):
+        Database.update(
+            constants.USER_COLLECTION,
+            {"email": self.email},
+            {"$set":
+                 {
+                     "email": new_email if new_email else self.email,
+                     "password": new_password if new_password else self.password
+                 }
+            }
         )

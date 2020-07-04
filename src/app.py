@@ -1,6 +1,6 @@
 from flask import (
     Flask, render_template, request,
-    session, redirect
+    session, redirect, url_for
 )
 from src.models import User
 from src import Database, constants
@@ -18,15 +18,42 @@ def initialize_db():
 
 @app.route('/')
 def home():
+    posts = Database.find(constants.POST_COLLECTION, {})
     return render_template(
-        'home.html'
+        'home.html', blogs=[post for post in posts]
     )
+
+
+@app.route('/profile/update', methods=['POST'])
+@app.route('/profile')
+def my_profile():
+    prompt_message = ""
+    prompt_success = ""
+    if request.method == 'POST':
+        new_email = request.form.get('updateEmail')
+        user = User.get_by_email(new_email)
+        if user and user.email != session.get('email'):
+            prompt_message = 'A user with the same email already exists.'
+        elif not user and len(new_email):
+            new_password = request.form.get('updatePassword')
+            p = new_password if len(new_password) > 0 else None
+            current_user = User.get_by_email(session.get('email'))
+            current_user.update_user(new_email, p)
+            session.__setitem__('email', new_email)
+            prompt_success = 'Details updated successfully'
+        elif not len(new_email):
+            new_password = request.form.get('updatePassword')
+            p = new_password if len(new_password) > 0 else None
+            current_user = User.get_by_email(session.get('email'))
+            current_user.update_user(None, p)
+            prompt_success = "Password updated successfully."
+    return render_template('profile.html', prompt_message=prompt_message, prompt_success=prompt_success)
 
 
 # ------------------------auth----------------------------------
 @app.route('/register')
 def register():
-    return render_template('register.html')
+    return render_template('register.html', prompt_message = "")
 
 
 @app.route('/login')
@@ -49,16 +76,21 @@ def login_user():
         user.login(email)
     else:
         session.__setitem__('email', None)
-    return render_template('profile.html', email=session['email'])
+    return redirect('/', code=302)
 
 
 @app.route('/auth/register', methods=['POST'])
 def register_user():
+    # prompt_alert = ""
     email = request.form.get('email')
     password = request.form.get('password')
-    if User.register(email, password):
-        return render_template('profile.html', email=session['email'])
-    return render_template('login.html')
+    if not len(email) or not len(password):
+        prompt_alert = "Please enter valid email and password values."
+    elif User.register(email, password):
+        return redirect('/', code=302)
+    else:
+        prompt_alert = 'User with the same email already exists!'
+    return render_template('register.html', prompt_message=prompt_alert)
 
 
 @app.route('/search')
@@ -72,7 +104,7 @@ def search():
                            )
     li = [r for r in result]
     print(li)
-    return render_template('profile.html', email=li)
+    return render_template('search.html', email=li)
 
 # ----------------------------Blogs-----------------------------------
 

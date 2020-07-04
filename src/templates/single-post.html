@@ -6,14 +6,14 @@
             <div class="card-header text-center" style="margin: 7px 0px;"><h1>{{ post.title }}</h1><small>by {{ post.author }}</small></div>
             <div class="card-body text-center">
                 {% if post.content|length > 0 %}
-                    <p style="margin: 10px 0px;">{{ post.content }}</p>
+                    <p class="text-center" style="margin-top: 40px; margin-bottom: 60px;">{{ post.content }}</p>
                 {% else %}
-                    <p style="maring:10px 0px;"> No content has been added to this Post.</p>
+                    <p style="margin-top: 40px; margin-bottom: 60px;"> No content has been added to this Post.</p>
                 {% endif %}
-            <div class="card-footer">
-                <p><small> Created at: {{ post.created_at }}</small></p>
-        </div>
-        </div>
+                <div class="card-footer">
+                    <p><small> Created on: {{ post.created_at }}</small></p>
+                </div>
+            </div>
         </div>
     {% else %}
         <br>

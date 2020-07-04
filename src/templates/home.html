@@ -27,8 +27,38 @@
 <!--            </div>-->
         </center>
         {% else %}
-            <br>
-            <h1>This is working.</h1>
+           <br>
+        <h2>Latest Posts</h2>
+        <hr>
+        {% if not blogs %}
+            <div style="margin: 40px 0px;">
+                <h3>There are no blogs to show.</h3><br>
+            </div>
+        {% else %}
+        <div class="row">
+            {% for blog in blogs %}
+            <div class="col-sm-12">
+                <div class="card border-secondary mb-3" style="max-width: 100%">
+                  <div class="card-header card-title bg-transparent border-muted">{{ blog.title}}</div>
+                  <div class="card-body text-muted">
+                      {% if blog.content|length > 120 %}
+                        <p class="card-text">{{ blog.content[:120] }}...</p>
+                      {% elif blog.content|length ==0 %}
+                        <p class="card-text">No content to show.</p>
+                      {% else %}
+                        <p class="card-text">{{ blog.content }}</p>
+                      {% endif %}
+                   <a href="/post/{{ blog._id }}">
+                      <p class="card-text"><small class="text-muted">Created by {{ blog.author }}</small></p>
+                   </a>
+                  </div>
+                  <div class="card-footer bg-transparent border-muted">
+                    <a href="/post/{{ blog._id }}">View</a></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% endif %}
     </div>
 {% endblock %}
