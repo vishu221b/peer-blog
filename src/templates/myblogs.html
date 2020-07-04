@@ -1,25 +1,34 @@
 {% extends "base-nav.html" %}
 {% block content %}
     <div class="container">
-    <!--    <h1>{{ email }}'s Blogs</h1>-->
+        <br>
+        <h1>My Blogs</h1>
+        <hr>
         {% if not blogs %}
-            <div style="margin: 20px 0px;">
+            <div style="margin: 40px 0px;">
                 <h3>There are no blogs to show.</h3><br>
-                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#blogModal">Create Blog</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#blogModal">Create Blog</button>s
             </div>
         {% else %}
+        <div class="row">
             {% for blog in blogs %}
-            <div>
-                <br>
-                <a href="/posts/{{ blog._id }}"><h3>{{ blog.title }}</h3></a>
-                <p>{{ blog.description }}</p>
-                <a href="/posts/{{ blog._id }}" target="_blank">
-                    <button type="button" class="btn btn-primary btn-sm">View Posts</button>
-                </a>
-                <hr>
+            <div class="col-sm-4">
+                <div class="card border-secondary mb-3" style="max-width: 28.3rem;">
+                  <div class="card-header card-title bg-transparent border-muted">{{ blog.title}}</div>
+                  <div class="card-body text-muted">
+<!--                    <h5 class="card-title">{{blog.title}}</h5>-->
+                    <p class="card-text">{{ blog.description }}</p>
+                   <a href="/posts/{{ blog._id }}">
+                      <p class="card-text"><small class="text-muted">Created by {{ blog.author }}</small></p>
+                   </a>
+                  </div>
+                  <div class="card-footer bg-transparent border-muted">
+                    <a href="/posts/{{ blog._id }}">View all posts</a></div>
+                </div>
             </div>
             {% endfor %}
-        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#blogModal">Create Blog</button>
+        </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#blogModal" style="margin: 20px 0px;">Create Blog</button>
         {% endif %}
 <!--        Modal for New Blog Form-->
         <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
@@ -39,7 +48,7 @@
                   </div>
                   <div class="form-group">
                     <label for="message-text" class="col-form-label">Description:</label>
-                    <textarea class="form-control" id="message-text" name="blogDescription"></textarea>
+                    <textarea class="form-control" id="message-text" name="blogDescription" style="height: 200px;"></textarea>
                   </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Create</button>

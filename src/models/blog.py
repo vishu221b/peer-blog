@@ -19,7 +19,7 @@ class Blog(object):
             blog_id=self._id,
             title=title,
             content=content,
-            created_at=datetime.strptime(date, '%d%m%Y') if date else datetime.utcnow(),
+            created_at=date,
             author=self.author
         )
         self.post.save_to_mongo()

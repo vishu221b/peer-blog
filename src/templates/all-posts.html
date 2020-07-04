@@ -1,63 +1,47 @@
-{% extends "base.html" %}
+{% extends "base-nav.html" %}
 {% block content %}
 <div class="container">
     <br>
-    <h1>{{ blog_title }}'s Posts</h1>
-    <hr>
-    <div class="card-group">
-    {% for post in posts %}
-<!--    <div>-->
-<!--        <br>-->
-<!--        <h2>{{ post.title }}</h2>-->
-<!--        <p style="font-size: 10px;">created at: {{ post.created_at }}</p>-->
-<!--        <p>{{ post.content }}</p>-->
-<!--        <i>Written by: <a href="/user/{{ post.author }}">{{ post.author }} </i></a>-->
-<!--        <hr>-->
-<!--    </div>-->
-    <div class="card" style="width: 18rem;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-        <img src="{{ url_for('static', filename='assets/DummyImage.jpg')}}" height="100%" width="100%" class="card-img-top" alt="Source">
-      </div>
-      <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">Summary - {{ (post.content[:] + " ") *13  }}...</p>
-            <p class="card-text"><small class="text-muted">Created at {{ post.created_at }}</small></p>
-            <div class="text-right">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-              Open Full
-            </button>
+    <div class="row">
+        <div class="col-lg-6 text-left">
+        <h1>{{ blog_title }}</h1>
             </div>
-          </div>
-      </div>
-       </div>
-    </div>
+        <div class="col-lg-6 text-right">
+        <a href="/post/{{ blog_id }}/create" class="btn btn-success">Create Post</a>
+        </div>
 
+    </div>
+    <hr>
+    {% if not posts %}
+        <div style="margin: 40px 0px;">
+            <h3>There are no posts to show.</h3><br>
+        </div>
+    {% else %}
+<!--        <div class="card-deck">-->
+            {% for post in posts %}
+                <div class="card" style="max-width: 69.5rem;margin: 20px 0px;">
+                  <div class="row no-gutters">
+<!--                  <div class="col-md-8">-->
+                      <div class="card-body">
+<!--                          <div class="card-header">-->
+                            <h4 class="card-title">{{ post.title }}</h4>
+<!--                              </div>-->
+                          <hr>
+                        <p class="card-text">Summary - {{ post.content[:] }}...</p>
+                        <p class="card-text"><small class="text-muted">Created at {{ post.created_at }}</small></p>
+                        <div class="text-right">
+                        <a href="/post/{{ post._id }}" class="btn btn-success">
+                          View Post
+                        </a>
+                        </div>
+                      </div>
+<!--                  </div>-->
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{ post.content }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="/post/single/{{ post._id }}">
-            <button type="button" class="btn btn-primary">View Full</button>
-            </a>
-      </div>
-    </div>
-  </div>
+<!--                  </div>-->
+                </div>
+                <!-- Modal -->
+                </div>
+        {% endfor %}
+    {% endif %}
 </div>
-</div>
-    {% endfor %}
-    </div>
 {% endblock %}
