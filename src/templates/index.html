@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% if not session["email"] %}
+    <form action="/login" method="GET" id="login-form">
+        <div class="form-row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-success btn-block">Log in    </button>
+            </div>
+        </div>
+    </form>
+    <form action="/register" method="GET" id="register-form">
+        <div class="form-row">
+            <div class="col-12">
+                <button type="submit" class="btn btn-success btn-block">Register    </button>
+            </div>
+        </div>
+    </form>
+    {% else %}
+    <br>
+    <h1>This is working.</h1>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,8 +1,10 @@
 from flask import (
-    Flask, render_template, request, session
+    Flask, render_template, request,
+    session, redirect, make_response
 )
 from src.models import User
 from src import Database, constants
+from src.models import Blog
 
 
 app = Flask(__name__)
@@ -21,6 +23,7 @@ def home():
     )
 
 
+# ------------------------auth----------------------------------
 @app.route('/register')
 def register():
     return render_template('register.html')
@@ -29,6 +32,12 @@ def register():
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    User.logout()
+    return redirect('/login')
 
 
 @app.route('/auth/login', methods=['POST'])
@@ -65,6 +74,8 @@ def search():
     print(li)
     return render_template('profile.html', email=li)
 
+# ----------------------------Blogs-----------------------------------
+
 
 @app.route('/blog/<user_id>')
 @app.route('/myblogs')
@@ -78,6 +89,26 @@ def get_blogs(user_id=None):
         return render_template('error_404.html')
     user_blogs = user.get_blogs()
     return render_template('myblogs.html', blogs=user_blogs, email=session.get('email'))
+
+
+@app.route('/blog/create', methods=['POST'])
+def create_new_blog():
+    user = User.get_by_email(session.get('email'))
+    title = request.form.get('blogTitle')
+    description = request.form.get('blogDescription')
+    print(title, description, "Balle")
+    blog = Blog(title=title, description=description, author=user.email, author_id=user._id)
+    blog.save_to_mongo()
+    return make_response(get_blogs())
+
+
+# -----------------------------Posts----------------------------------
+
+@app.route('/posts/<blog_id>')
+def get_posts_for_blog(blog_id):
+    blog = Blog.from_mongo(blog_id)
+    posts = blog.get_posts()
+    return render_template("all-posts.html", posts=posts, blog_title=blog.title)
 
 
 if __name__ == "__main__":
