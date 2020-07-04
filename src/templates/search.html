@@ -1,10 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% if not session["email"] %}
+    {% extends "base-empty-nav.html" %}
+{% else %}
+    {% extends "base-nav.html" %}
+{% endif %}
+{% block content %}
+    <div class="container">
+        {% if not session["email"] %}
+        <center>
+            <div class="jumbotron jumbotron-fluid custom-jumbo"><h1 class="display-4">Welcome to Peerblog!</h1></div>
+                <div class="container">
+                    <form action="/login" method="GET" id="login-form" style="margin-top: 50px;">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success btn-block" style="width:40%;">Log in    </button>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="/register" method="GET" id="register-form" style="margin: 30px 0px;">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success btn-block" style="width:40%">Register    </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+<!--            </div>-->
+        </center>
+        {% else %}
+           <br>
+        <h3>Search result for '{{ author }}'</h3>
+        <hr>
+        {% if not posts %}
+            <div style="margin: 40px 0px;">
+                <h3>There are no posts to show.</h3><br>
+            </div>
+        {% else %}
+        <div class="row">
+            {% for blog in posts %}
+            <div class="col-sm-12">
+                <div class="card border-secondary mb-3" style="max-width: 100%">
+                  <div class="card-header card-title bg-transparent border-muted">{{ blog.title}}</div>
+                  <div class="card-body text-muted">
+                      {% if blog.content|length > 120 %}
+                        <p class="card-text">{{ blog.content[:120] }}...</p>
+                      {% elif blog.content|length ==0 %}
+                        <p class="card-text">No content.</p>
+                      {% else %}
+                        <p class="card-text">{{ blog.content }}</p>
+                      {% endif %}
+                   <a href="/post/{{ blog._id }}">
+                      <p class="card-text"><small class="text-muted">Created by {{ blog.author }}</small></p>
+                   </a>
+                  </div>
+                  <div class="card-footer bg-transparent border-muted">
+                    <a href="/post/{{ blog._id }}">View</a></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

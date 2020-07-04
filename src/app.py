@@ -94,18 +94,20 @@ def register_user():
     return render_template('register.html', prompt_message=prompt_alert)
 
 
-@app.route('/search')
+@app.route('/search', methods=['POST'])
 def search():
-    pattern = request.args['pattern']
-    result = Database.find(constants.BLOG_COLLECTION,
-                           {"$or": [{"title": {"$regex": u"{}".format(pattern)}},
-                                    {"author": {"$regex": u"{}".format(pattern)}}
-                                    ]
-                            }
+    pattern = request.form.get('pattern')
+    result = Database.find(constants.POST_COLLECTION,
+                           {
+                               "author":
+                                   {
+                                       "$regex": u"{}".format(pattern)
+                                   }
+                           }
                            )
     li = [r for r in result]
     print(li)
-    return render_template('search.html', email=li)
+    return render_template('search.html', posts=li, author=pattern)
 
 # ----------------------------Blogs-----------------------------------
 

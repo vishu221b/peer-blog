@@ -17,7 +17,11 @@
                   <div class="card-header card-title bg-transparent border-muted">{{ blog.title}}</div>
                   <div class="card-body text-muted">
 <!--                    <h5 class="card-title">{{blog.title}}</h5>-->
-                    <p class="card-text">{{ blog.description }}</p>
+                      {% if blog.description|length > 0 %}
+                        <p class="card-text">{{ blog.description }}</p>
+                      {% else %}
+                        <p class="card-text">No description available.</p>
+                      {% endif %}
                    <a href="/posts/{{ blog._id }}">
                       <p class="card-text"><small class="text-muted">Created by {{ blog.author }}</small></p>
                    </a>

@@ -32,7 +32,7 @@
         <hr>
         {% if not blogs %}
             <div style="margin: 40px 0px;">
-                <h3>There are no blogs to show.</h3><br>
+                <h3>There are no posts to show.</h3><br>
             </div>
         {% else %}
         <div class="row">
@@ -44,7 +44,7 @@
                       {% if blog.content|length > 120 %}
                         <p class="card-text">{{ blog.content[:120] }}...</p>
                       {% elif blog.content|length ==0 %}
-                        <p class="card-text">No content to show.</p>
+                        <p class="card-text">No content.</p>
                       {% else %}
                         <p class="card-text">{{ blog.content }}</p>
                       {% endif %}
