@@ -76,6 +76,7 @@ def login_user():
         user.login(email)
     else:
         session.__setitem__('email', None)
+        return render_template('login.html', prompt_error="Invalid credentials.")
     return redirect('/', code=302)
 
 
