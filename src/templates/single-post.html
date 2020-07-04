@@ -1,0 +1,23 @@
+{% extends "base-nav.html" %}
+{% block content %}
+<div class="container">
+    {% if post %}
+        <div class="card" style="margin: 40px 0px;">
+            <div class="card-header text-center" style="margin: 7px 0px;"><h1>{{ post.title }}</h1><small>by {{ post.author }}</small></div>
+            <div class="card-body text-center">
+                {% if post.content|length > 0 %}
+                    <p style="margin: 10px 0px;">{{ post.content }}</p>
+                {% else %}
+                    <p style="maring:10px 0px;"> No content has been added to this Post.</p>
+                {% endif %}
+            <div class="card-footer">
+                <p><small> Created at: {{ post.created_at }}</small></p>
+        </div>
+        </div>
+        </div>
+    {% else %}
+        <br>
+        <h1>No posts found.</h1>
+    {% endif %}
+</div>
+{% endblock %}

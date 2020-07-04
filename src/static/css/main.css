@@ -1,8 +1,9 @@
 .post-forms {
-    margin-top: 25px;
+    margin-top: 150px;
+    max-width:50%;
+    float: center;
 }
 
-.post-forms{
-    max-width:40%;
-    float: center;
+.custom-jumbo{
+   margin: 90px;
 }

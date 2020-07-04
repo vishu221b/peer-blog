@@ -1,0 +1,19 @@
+{% extends "base-nav.html" %}
+{% block content %}
+    <div class="container">
+        <form method="POST" action="/post/{{ blog_id }}/create">
+             <div class="form-group">
+                 <label for="recipient-name" class="col-form-label">Title</label>
+                 <input type="text" class="form-control" id="recipient-name" name="postTitle">
+             </div>
+             <div class="form-group">
+                 <label for="message-text" class="col-form-label">Description:</label>
+                 <textarea class="form-control" id="message-text" name="postContent" style="height: 300px;"></textarea>
+             </div>
+             <div class="footer">
+                 <button type="submit" class="btn btn-success">Create</button>
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+             </div>
+        </form>
+    </div>
+{% endblock %}
