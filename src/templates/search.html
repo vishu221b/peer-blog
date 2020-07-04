@@ -28,15 +28,15 @@
         </center>
         {% else %}
            <br>
-        <h2>Latest Posts</h2>
+        <h3>Search results for '{{ author }}'</h3>
         <hr>
-        {% if not blogs %}
+        {% if not posts %}
             <div style="margin: 40px 0px;">
                 <h3>There are no posts to show.</h3><br>
             </div>
         {% else %}
         <div class="row">
-            {% for blog in blogs %}
+            {% for blog in posts %}
             <div class="col-sm-12">
                 <div class="card border-secondary mb-3" style="max-width: 100%">
                   <div class="card-header card-title bg-transparent border-muted">{{ blog.title}}</div>

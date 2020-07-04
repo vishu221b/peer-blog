@@ -2,12 +2,12 @@
 {% block content %}
     <div class="container">
         <br>
-        <h1>My Blogs</h1>
+        <h2>My Blogs</h2>
         <hr>
         {% if not blogs %}
             <div style="margin: 40px 0px;">
                 <h3>There are no blogs to show.</h3><br>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#blogModal">Create Blog</button>s
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#blogModal">Create Blog</button>
             </div>
         {% else %}
         <div class="row">
@@ -17,7 +17,11 @@
                   <div class="card-header card-title bg-transparent border-muted">{{ blog.title}}</div>
                   <div class="card-body text-muted">
 <!--                    <h5 class="card-title">{{blog.title}}</h5>-->
-                    <p class="card-text">{{ blog.description }}</p>
+                      {% if blog.description|length > 0 %}
+                        <p class="card-text">{{ blog.description }}</p>
+                      {% else %}
+                        <p class="card-text">No description available.</p>
+                      {% endif %}
                    <a href="/posts/{{ blog._id }}">
                       <p class="card-text"><small class="text-muted">Created by {{ blog.author }}</small></p>
                    </a>
@@ -44,7 +48,7 @@
                 <form method="POST" action="/blog/create">
                   <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Title</label>
-                    <input type="text" class="form-control" id="recipient-name" name="blogTitle">
+                    <input type="text" class="form-control" id="recipient-name" name="blogTitle" required>
                   </div>
                   <div class="form-group">
                     <label for="message-text" class="col-form-label">Description:</label>
