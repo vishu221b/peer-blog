@@ -1,6 +1,6 @@
 from flask import (
     Flask, render_template, request,
-    session, redirect, url_for
+    session, redirect
 )
 from src.models import User
 from src import Database, constants

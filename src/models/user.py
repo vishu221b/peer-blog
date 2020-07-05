@@ -96,6 +96,5 @@ class User(object):
                  {
                      "email": new_email if new_email else self.email,
                      "password": new_password if new_password else self.password
-                 }
-            }
+                 }}
         )
