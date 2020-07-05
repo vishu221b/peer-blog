@@ -3,8 +3,8 @@
 Peerblog is a very simple blog web application written in Flask and bootstrap.
 
 Users can perform following actions in the app : 
-- Create an account
-- Create new blogs
+- Create an account (using email and password) and then log in
+- Create new blogs 
 - Create new posts for each of the blogs
 - Search for specific posts by author name
 - View any other registered person's posts on home page
@@ -32,3 +32,4 @@ To setup and run the app locally, follow the below instructions -
 ### Home page :)
 
 ![home_page](src/static/assets/Homepage.jpg)
+<hr>
