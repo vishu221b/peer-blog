@@ -21,6 +21,7 @@ Users can perform following actions in the app :
 
 ```
 To setup and run the app locally, follow the below instructions -
+
 1. Clone the repo locally.
 2. cd into the home directory, where 'requirements.txt' file resides.
 3. open cmd and issue command pip install -r requirements.txt (if on linux, run pip3 install -r requirements.txt)
