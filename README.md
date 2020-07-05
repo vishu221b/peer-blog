@@ -12,9 +12,19 @@ Users can perform following actions in the app :
 
 ### Technologies used -
 
+1. Python
+2. MongoDB
+3. Bootstrap
+<hr>
+
+```
+Dependencies-
+
 1.  Flask
 2.  Pymongo
 3.  Bootstrap
+```
+
 <hr>
 
 ### Basic setup
@@ -27,6 +37,8 @@ To setup and run the app locally, follow the below instructions -
 3. open cmd and issue command pip install -r requirements.txt (if on linux, run pip3 install -r requirements.txt)
 4. cd into 'src' folder and issue command 'python app.py' to run the app
 ```
+
+##### Make sure mongoDB is installed on your system before running the app locally.
 
 <hr>
 
